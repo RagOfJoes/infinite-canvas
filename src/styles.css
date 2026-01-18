@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+	--font-*: initial;
+	--font-mono: "JetBrainsMono-Variable", sans-serif;
+	--font-sans: "GeneralSans-Variable", sans-serif, system-ui;
+
+	--color-background: oklch(0.5372 0.2564 267.12);
+	--color-border: oklch(0.6563 0.1821 265.62);
+	--color-foreground: oklch(1 0 0);
+
+	--color-muted: oklch(0.6563 0.1821 265.62);
+	--color-muted-foreground: oklch(0.8126 0.0933 268.18);
+
+	--color-primary: oklch(1 0 0);
+	--color-primary-foreground: oklch(0.5372 0.2564 267.12);
+}
+
+@layer base {
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: oklch(0.6563 0.1821 265.62);
+	}
+}
+
+@layer base {
+	@font-face {
+		font-family: "GeneralSans-Variable";
+		src:
+			url("/fonts/GeneralSans/GeneralSans-Variable.woff2") format("woff2"),
+			url("/fonts/GeneralSans/GeneralSans-Variable.woff") format("woff"),
+			url("/fonts/GeneralSans/GeneralSans-Variable.ttf") format("truetype");
+		font-weight: 200 700;
+		font-display: swap;
+		font-style: normal;
+	}
+
+	@font-face {
+		font-family: "JetBrainsMono-Variable";
+		src:
+			url("/fonts/JetBrainsMono/JetBrainsMono-Variable.woff2") format("woff2"),
+			url("/fonts/JetBrainsMono/JetBrainsMono-Variable.woff") format("woff"),
+			url("/fonts/JetBrainsMono/JetBrainsMono-Variable.ttf") format("truetype");
+		font-weight: 200 700;
+		font-display: swap;
+		font-style: normal;
+	}
+}
+
+@layer utilities {
+	.bg-striped {
+		background-attachment: fixed;
+		background-color: var(--color-background);
+		background-image: repeating-linear-gradient(
+			315deg,
+			var(--color-border) 0,
+			var(--color-border) 1px,
+			transparent 0,
+			transparent 50%
+		);
+		background-size: 10px 10px;
+	}
+}
