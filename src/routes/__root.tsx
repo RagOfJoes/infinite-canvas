@@ -11,6 +11,11 @@ import { cn } from "@/lib/cn";
 export const Route = createRootRouteWithContext()({
 	head: () => ({
 		links: [{ rel: "stylesheet", href: style }],
+		meta: [
+			{
+				title: "Infinite Canvas",
+			},
+		],
 	}),
 	shellComponent: RootComponent,
 });
