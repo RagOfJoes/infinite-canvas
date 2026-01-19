@@ -88,7 +88,6 @@ export class Circle extends Shape {
 	 */
 
 	render(device: Device, renderPass: RenderPass, uniformBuffer: Buffer) {
-		console.log("Render");
 		if (!this.#program) {
 			this.#uniformBuffer = device.createBuffer({
 				hint: BufferFrequencyHint.DYNAMIC,
