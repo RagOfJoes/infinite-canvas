@@ -1,11 +1,11 @@
 import { createMemo, createSignal } from "solid-js";
-import { createListCollection } from "@ark-ui/solid/select";
 import type { Accessor } from "solid-js";
 
+import { createListCollection } from "@ark-ui/solid/select";
 import type { ListCollection } from "@ark-ui/solid/select";
 
-import type { InfiniteCanvasConfig, Shape } from "@/components/lesson-two";
 import { AntiAliasingType } from "@/components/lesson-two";
+import type { InfiniteCanvasConfig, Shape } from "@/components/lesson-two";
 import { createContext } from "@/lib/create-context";
 
 export type UseLessonTwo = [

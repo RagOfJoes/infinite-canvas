@@ -7,7 +7,6 @@ import {
 	Format,
 	VertexStepMode,
 } from "@antv/g-device-api";
-import * as d3 from "d3-color";
 import type {
 	Bindings,
 	Buffer,
@@ -17,6 +16,7 @@ import type {
 	RenderPass,
 	RenderPipeline,
 } from "@antv/g-device-api";
+import * as d3 from "d3-color";
 
 import { frag, vert } from "@/components/lesson-two/lesson-two-shaders";
 

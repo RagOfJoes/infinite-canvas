@@ -24,6 +24,7 @@ export default defineConfig(
 					format: ["PascalCase"],
 				},
 			],
+			["import/order"]: "off",
 		},
 	},
 );

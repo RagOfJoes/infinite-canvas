@@ -2,7 +2,6 @@ import { Index } from "solid-js/web";
 
 import { GripIcon } from "lucide-solid";
 
-import type { InfiniteCanvasConfig } from "@/components/lesson-two";
 import {
 	FloatingPanelBody,
 	FloatingPanelContent,
@@ -10,6 +9,7 @@ import {
 	FloatingPanelRoot,
 } from "@/components/floating-panel";
 import { AntiAliasingType, Circle } from "@/components/lesson-two";
+import type { InfiniteCanvasConfig } from "@/components/lesson-two";
 import {
 	SelectContent,
 	SelectControl,

@@ -4,7 +4,6 @@ import { createListCollection } from "@ark-ui/solid/select";
 import { ClientOnly, createFileRoute } from "@tanstack/solid-router";
 import { GripIcon } from "lucide-solid";
 
-import type { InfiniteCanvasConfig } from "@/components/lesson-one";
 import {
 	FloatingPanelBody,
 	FloatingPanelContent,
@@ -12,6 +11,7 @@ import {
 	FloatingPanelRoot,
 } from "@/components/floating-panel";
 import { InfiniteCanvas } from "@/components/lesson-one";
+import type { InfiniteCanvasConfig } from "@/components/lesson-one";
 import {
 	SelectContent,
 	SelectControl,

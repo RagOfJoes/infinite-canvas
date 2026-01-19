@@ -2,7 +2,6 @@ import { splitProps } from "solid-js";
 import { Portal } from "solid-js/web";
 
 import { Select } from "@ark-ui/solid/select";
-import { CheckIcon, ChevronDownIcon } from "lucide-solid";
 import type {
 	SelectContentProps,
 	SelectControlProps,
@@ -14,6 +13,7 @@ import type {
 	SelectRootProps,
 	SelectTriggerProps,
 } from "@ark-ui/solid/select";
+import { CheckIcon, ChevronDownIcon } from "lucide-solid";
 
 import { cn } from "@/lib/cn";
 

@@ -3,8 +3,7 @@
 
 	"endOfLine": "auto",
 	"importOrder": ["(^solid-js$|^solid-js/(.*))", "<THIRD_PARTY_MODULES>", "^@/(.*)/(.*)", "^[./]"],
-	"importOrderBuiltinModulesToTop": true,
-	"importOrderCombineTypeAndValueImports": true,
+	"importOrderCaseInsensitive": true,
 	"importOrderMergeDuplicateImports": true,
 	"importOrderSeparation": true,
 	"importOrderSortSpecifiers": true,

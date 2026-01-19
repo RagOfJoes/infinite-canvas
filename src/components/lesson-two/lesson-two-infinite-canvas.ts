@@ -1,6 +1,6 @@
+import { Renderer } from "@/components/lesson-two/lesson-two-plugins";
 import type { PluginContext } from "@/components/lesson-two/lesson-two-plugins";
 import type { Shape } from "@/components/lesson-two/lesson-two-shapes";
-import { Renderer } from "@/components/lesson-two/lesson-two-plugins";
 import { getGlobalThis } from "@/lib/browser";
 import { AsyncParallelHook, SyncHook } from "@/lib/hooks";
 

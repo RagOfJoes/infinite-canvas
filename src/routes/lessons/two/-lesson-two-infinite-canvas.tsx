@@ -1,7 +1,7 @@
 import { createEffect, onCleanup, onMount } from "solid-js";
 
-import type { UseLessonTwo } from "@/routes/lessons/two/-lesson-two-context";
 import { InfiniteCanvas } from "@/components/lesson-two";
+import type { UseLessonTwo } from "@/routes/lessons/two/-lesson-two-context";
 import { useLessonTwoContext } from "@/routes/lessons/two/-lesson-two-context";
 
 export type LessonTwoInfiniteCanvasProps = {

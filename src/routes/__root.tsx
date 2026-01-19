@@ -4,9 +4,9 @@ import { HydrationScript } from "solid-js/web";
 import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from "@tanstack/solid-router";
 import { TanStackRouterDevtools } from "@tanstack/solid-router-devtools";
 
-import style from "../styles.css?url";
 import { cn } from "@/lib/cn";
 
+import style from "../styles.css?url";
 
 export const Route = createRootRouteWithContext()({
 	head: () => ({
