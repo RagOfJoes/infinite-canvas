@@ -29,7 +29,16 @@ import {
 	SliderValueText,
 } from "@/components/slider";
 
-export const Route = createFileRoute("/lessons/one")({ component: App });
+export const Route = createFileRoute("/lessons/one")({
+	component: App,
+	head: () => ({
+		meta: [
+			{
+				title: "Lesson One | Infinite Canvas",
+			},
+		],
+	}),
+});
 
 function Canvas(props: {
 	renderer?: InfiniteCanvasConfig["renderer"];
