@@ -1,4 +1,3 @@
-import type { CanvasConfig } from "@/components/lesson-one";
 import type { AsyncParallelHook, SyncHook } from "@/lib/hooks";
 
 export interface Hooks {
@@ -35,7 +34,7 @@ export type PluginContext = {
 	 */
 	globalThis: typeof globalThis;
 	hooks: Hooks;
-} & CanvasConfig;
+};
 
 /**
  * Inspired by Webpack plugin system.
