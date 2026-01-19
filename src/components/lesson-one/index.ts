@@ -1,1 +1,1 @@
-export * from "./infinite-canvas.ts";
+export * from "./infinite-canvas";

@@ -4,14 +4,14 @@ import { createListCollection } from "@ark-ui/solid/select";
 import { ClientOnly, createFileRoute } from "@tanstack/solid-router";
 import { GripIcon } from "lucide-solid";
 
-import type {InfiniteCanvasConfig} from "@/components/lesson-one";
+import type { InfiniteCanvasConfig } from "@/components/lesson-one";
 import {
 	FloatingPanelBody,
 	FloatingPanelContent,
 	FloatingPanelHeader,
 	FloatingPanelRoot,
 } from "@/components/floating-panel";
-import { InfiniteCanvas  } from "@/components/lesson-one";
+import { InfiniteCanvas } from "@/components/lesson-one";
 import {
 	SelectContent,
 	SelectControl,
@@ -61,12 +61,14 @@ function Canvas(props: {
 		const canvas = await new InfiniteCanvas({
 			canvas: canvasRef,
 			renderer: props.renderer,
+			shaderCompilerPath: "/glsl_wgsl_compiler_bg.wasm",
 		}).initialized;
 
 		const animate = () => {
 			canvas.render();
 			requestAnimationFrame(animate);
 		};
+		animate();
 	});
 
 	return <canvas class="border" ref={canvasRef}></canvas>;
