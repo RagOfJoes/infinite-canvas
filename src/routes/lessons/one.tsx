@@ -1,4 +1,4 @@
-import { Index, Show, createEffect, createSignal, onMount } from "solid-js";
+import { Index, Show, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 
 import { createListCollection } from "@ark-ui/solid/select";
 import { ClientOnly, createFileRoute } from "@tanstack/solid-router";
@@ -47,6 +47,7 @@ function Canvas(props: {
 		height: number;
 	};
 }) {
+	let canvas: InfiniteCanvas;
 	let canvasRef!: HTMLCanvasElement;
 
 	const resize = (width: number, height: number) => {
@@ -67,7 +68,7 @@ function Canvas(props: {
 	onMount(async () => {
 		resize(props.size.width, props.size.height);
 
-		const canvas = await new InfiniteCanvas({
+		canvas = await new InfiniteCanvas({
 			canvas: canvasRef,
 			renderer: props.renderer,
 			shaderCompilerPath: "/glsl_wgsl_compiler_bg.wasm",
@@ -80,7 +81,11 @@ function Canvas(props: {
 		animate();
 	});
 
-	return <canvas class="border" ref={canvasRef}></canvas>;
+	onCleanup(() => {
+		canvas.destroy();
+	});
+
+	return <canvas class="border" ref={canvasRef} />;
 }
 
 function App() {

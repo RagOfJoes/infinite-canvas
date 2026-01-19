@@ -86,6 +86,7 @@ export class InfiniteCanvas {
 	 */
 	destroy() {
 		const { hooks } = this.#pluginContext;
+		this.#shapes.forEach((shape) => shape.destroy());
 		hooks.destroy.call();
 	}
 
@@ -104,5 +105,9 @@ export class InfiniteCanvas {
 		}
 
 		this.#shapes.splice(index, 1);
+	}
+
+	removeChildren() {
+		this.#shapes.splice(0, this.#shapes.length - 1);
 	}
 }

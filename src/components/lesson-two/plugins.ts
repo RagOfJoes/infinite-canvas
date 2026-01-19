@@ -15,10 +15,9 @@ import type {
 	SwapChain,
 } from "@antv/g-device-api";
 
+import type { InfiniteCanvasConfig } from "@/components/lesson-two";
+import type { Shape } from "@/components/lesson-two/shapes";
 import type { AsyncParallelHook, SyncHook } from "@/lib/hooks";
-
-import type { InfiniteCanvasConfig } from "./infinite-canvas";
-import type { Shape } from "./shapes";
 
 export interface Hooks {
 	/**
