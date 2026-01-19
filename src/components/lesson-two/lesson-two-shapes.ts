@@ -18,7 +18,7 @@ import type {
 	RenderPipeline,
 } from "@antv/g-device-api";
 
-import { frag, vert } from "@/components/lesson-two/shaders";
+import { frag, vert } from "@/components/lesson-two/lesson-two-shaders";
 
 export enum AntiAliasingType {
 	NONE,

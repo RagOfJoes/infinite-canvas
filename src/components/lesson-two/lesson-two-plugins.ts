@@ -1,9 +1,23 @@
-import { WebGLDeviceContribution, WebGPUDeviceContribution } from "@antv/g-device-api";
-import type { DeviceContribution } from "@antv/g-device-api";
+import {
+	BufferFrequencyHint,
+	BufferUsage,
+	Format,
+	TextureUsage,
+	TransparentWhite,
+	WebGLDeviceContribution,
+	WebGPUDeviceContribution,
+} from "@antv/g-device-api";
+import type {
+	Device,
+	DeviceContribution,
+	RenderPass,
+	RenderTarget,
+	SwapChain,
+} from "@antv/g-device-api";
 
+import type { InfiniteCanvasConfig } from "@/components/lesson-two";
+import type { Shape } from "@/components/lesson-two/lesson-two-shapes";
 import type { AsyncParallelHook, SyncHook } from "@/lib/hooks";
-
-import type { InfiniteCanvasConfig } from "./infinite-canvas";
 
 export interface Hooks {
 	/**
@@ -18,6 +32,7 @@ export interface Hooks {
 	 * Called at the beginning of each frame.
 	 */
 	beginFrame: SyncHook<[]>;
+	render: SyncHook<Array<Shape>>;
 	/**
 	 * Called at the end of each frame.
 	 */
@@ -55,10 +70,16 @@ export class Renderer implements Plugin {
 	// @ts-ignore Ignore
 	#device: Device;
 	// @ts-ignore Ignore
+	#renderPass: RenderPass;
+	// @ts-ignore Ignore
+	#renderTarget: RenderTarget;
+	// @ts-ignore Ignore
 	#swapChain: SwapChain;
+	// @ts-ignore Ignore
+	#uniformBuffer: Buffer;
 
 	apply(context: PluginContext) {
-		const { hooks, canvas, renderer, shaderCompilerPath, devicePixelRatio } = context;
+		const { canvas, devicePixelRatio, hooks, renderer, shaderCompilerPath } = context;
 
 		hooks.initAsync.tapPromise(async () => {
 			let deviceContribution: DeviceContribution;
@@ -85,6 +106,24 @@ export class Renderer implements Plugin {
 
 			this.#swapChain = swapChain;
 			this.#device = swapChain.getDevice();
+
+			this.#renderTarget = this.#device.createRenderTargetFromTexture(
+				this.#device.createTexture({
+					format: Format.U8_RGBA_RT,
+					height,
+					usage: TextureUsage.RENDER_TARGET,
+					width,
+				}),
+			);
+
+			this.#uniformBuffer = this.#device.createBuffer({
+				viewOrSize: new Float32Array([
+					width / (devicePixelRatio ?? 1),
+					height / (devicePixelRatio ?? 1),
+				]),
+				usage: BufferUsage.UNIFORM,
+				hint: BufferFrequencyHint.DYNAMIC,
+			});
 		});
 
 		hooks.resize.tap((width, height) => {
@@ -95,14 +134,41 @@ export class Renderer implements Plugin {
 		});
 
 		hooks.destroy.tap(() => {
+			this.#renderTarget.destroy();
+			this.#uniformBuffer.destroy();
 			this.#device.destroy();
+			this.#device.checkForLeaks();
 		});
 
 		hooks.beginFrame.tap(() => {
+			const { width, height } = this.#swapChain.getCanvas();
+			const onscreentexture = this.#swapChain.getOnscreenTexture();
+
+			this.#uniformBuffer.setSubData(
+				0,
+				new Uint8Array(
+					new Float32Array([width / (devicePixelRatio ?? 1), height / (devicePixelRatio ?? 1)])
+						.buffer,
+				),
+			);
+
 			this.#device.beginFrame();
+
+			this.#renderPass = this.#device.createRenderPass({
+				colorAttachment: [this.#renderTarget],
+				colorClearColor: [TransparentWhite],
+				colorResolveTo: [onscreentexture],
+			});
+
+			this.#renderPass.setViewport(0, 0, width, height);
+		});
+
+		hooks.render.tap((shape) => {
+			shape.render(this.#device, this.#renderPass, this.#uniformBuffer);
 		});
 
 		hooks.endFrame.tap(() => {
+			this.#device.submitPass(this.#renderPass);
 			this.#device.endFrame();
 		});
 	}

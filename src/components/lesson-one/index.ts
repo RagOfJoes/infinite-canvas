@@ -1,1 +1,1 @@
-export * from "./infinite-canvas";
+export * from "./lesson-one-infinite-canvas";

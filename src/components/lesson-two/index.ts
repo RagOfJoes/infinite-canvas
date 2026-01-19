@@ -1,2 +1,2 @@
-export * from "./infinite-canvas";
-export * from "./shapes";
+export * from "./lesson-two-infinite-canvas";
+export * from "./lesson-two-shapes";

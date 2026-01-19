@@ -1,6 +1,4 @@
-import type { PluginContext } from "@/components/lesson-two/plugins";
-import type { Shape } from "@/components/lesson-two/shapes";
-import { Renderer } from "@/components/lesson-two/plugins";
+import type { PluginContext } from "@/components/lesson-one/lesson-one-plugins";
 import { getGlobalThis } from "@/lib/browser";
 import { AsyncParallelHook, SyncHook } from "@/lib/hooks";
 
@@ -14,7 +12,6 @@ export interface InfiniteCanvasConfig {
 export class InfiniteCanvas {
 	#instancePromise: Promise<this>;
 	#pluginContext: PluginContext & InfiniteCanvasConfig;
-	#shapes: Array<Shape> = [];
 
 	constructor(config: InfiniteCanvasConfig) {
 		const { canvas, renderer = "webgl", shaderCompilerPath = "", devicePixelRatio } = config;
@@ -31,23 +28,14 @@ export class InfiniteCanvas {
 				init: new SyncHook<[]>(),
 				initAsync: new AsyncParallelHook<[]>(),
 				beginFrame: new SyncHook<[]>(),
-				render: new SyncHook<Array<Shape>>(),
 				endFrame: new SyncHook<[]>(),
 				destroy: new SyncHook<[]>(),
 				resize: new SyncHook<[number, number]>(),
 			},
 		};
 
+		// eslint-disable-next-line @typescript-eslint/require-await
 		this.#instancePromise = (async () => {
-			// @ts-ignore Initialized above
-			const { hooks } = this.#pluginContext;
-
-			[new Renderer()].forEach((plugin) => {
-				plugin.apply(this.#pluginContext);
-			});
-			hooks.init.call();
-			await hooks.initAsync.promise();
-
 			return this;
 		})();
 	}
@@ -68,11 +56,6 @@ export class InfiniteCanvas {
 	render() {
 		const { hooks } = this.#pluginContext;
 		hooks.beginFrame.call();
-
-		this.#shapes.forEach((shape) => {
-			hooks.render.call(shape);
-		});
-
 		hooks.endFrame.call();
 	}
 
@@ -86,28 +69,10 @@ export class InfiniteCanvas {
 	 */
 	destroy() {
 		const { hooks } = this.#pluginContext;
-		this.#shapes.forEach((shape) => shape.destroy());
 		hooks.destroy.call();
 	}
 
 	getDOM() {
 		return this.#pluginContext.canvas;
-	}
-
-	appendChild(shape: Shape) {
-		this.#shapes.push(shape);
-	}
-
-	removeChild(shape: Shape) {
-		const index = this.#shapes.indexOf(shape);
-		if (index === -1) {
-			return;
-		}
-
-		this.#shapes.splice(index, 1);
-	}
-
-	removeChildren() {
-		this.#shapes.splice(0, this.#shapes.length - 1);
 	}
 }
